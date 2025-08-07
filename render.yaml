@@ -1,13 +1,11 @@
 services:
   - type: web
-    name: pgAdmin-dpg-d1qpnlodl3ps73eln790-a
+    name: pgadmin
     env: docker
     plan: free
-    region: oregon
-    dockerfilePath: ./Dockerfile
-    autoDeploy: true
+    dockerfilePath: Dockerfile
     envVars:
       - key: PGADMIN_DEFAULT_EMAIL
-        value: dev.leandro.guevara@email.com
+        value: admin@admin.com
       - key: PGADMIN_DEFAULT_PASSWORD
-        value: postgres
+        value: admin
