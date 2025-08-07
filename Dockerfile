@@ -1,5 +1,7 @@
 FROM python:3.11-slim
 
+USER root
+
 # Install system dependencies
 RUN apt-get update && \
     apt-get install -y \
@@ -27,23 +29,29 @@ RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
     apt-get install -y postgresql-client-17 && \
     rm -rf /var/lib/apt/lists/*
 
-# Install pgAdmin (from PyPI)
+# Install pgAdmin
 RUN pip install pgadmin4==8.6
 
-# Set environment variables for pgAdmin
-ENV PGADMIN_LISTEN_PORT=80
+# Set required environment variables
+ENV PGADMIN_LISTEN_PORT=10000
 ENV PGADMIN_DEFAULT_EMAIL=admin@admin.com
 ENV PGADMIN_DEFAULT_PASSWORD=admin
+ENV PGADMIN_CONFIG_LOCAL=True
 
 # Create required directories
-RUN mkdir -p /var/lib/pgadmin && \
-    mkdir -p /pgadmin4
+RUN mkdir -p /pgadmin4 /var/lib/pgadmin && \
+    chmod -R 700 /var/lib/pgadmin
 
 ENV PGADMIN_CONFIG_DIR=/pgadmin4
 ENV PGADMIN_DATA_DIR=/var/lib/pgadmin
 
 # Expose port
-EXPOSE 80
+EXPOSE 10000
 
-# Launch pgAdmin
-CMD ["python", "-m", "pgadmin4"]
+# Create entrypoint script
+RUN echo '#!/bin/bash\n\
+python3 -m pgadmin4' > /entrypoint.sh && chmod +x /entrypoint.sh
+
+COPY config_local.py /pgadmin4/config_local.py
+
+CMD ["/entrypoint.sh"]
