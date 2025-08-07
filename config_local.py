@@ -8,3 +8,5 @@ LOG_FILE = os.path.join(SQLITE_PATH, "pgadmin4.log")
 SESSION_DB_PATH = os.path.join(SQLITE_PATH, "sessions")
 STORAGE_DIR = os.path.join(SQLITE_PATH, "storage")
 AZURE_CREDENTIAL_CACHE_DIR = os.path.join(SQLITE_PATH, "azurecredentialcache")
+
+APP_NAME = 'pgAdmin 4'
