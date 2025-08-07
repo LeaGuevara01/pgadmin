@@ -1,7 +1,5 @@
-FROM dpage/pgadmin4:latest
+FROM dpage/pgadmin4:8.6
 
 USER root
 
-RUN apt-get update && apt-get install -y postgresql-client
-
-USER pgadmin
+RUN which apk || which apt-get || which yum || which dnf || which zypper
