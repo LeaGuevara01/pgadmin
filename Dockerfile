@@ -39,19 +39,21 @@ ENV PGADMIN_DEFAULT_PASSWORD=admin
 ENV PGADMIN_CONFIG_LOCAL=True
 
 # Create required directories
-RUN mkdir -p /pgadmin4 /var/lib/pgadmin && \
+RUN mkdir -p /pgadmin4 /var/lib/pgadmin/storage && \
     chmod -R 700 /var/lib/pgadmin
 
 ENV PGADMIN_CONFIG_DIR=/pgadmin4
 ENV PGADMIN_DATA_DIR=/var/lib/pgadmin
 
-# Expose port
-EXPOSE 10000
-
-# Create entrypoint script
-RUN echo '#!/bin/bash\n\
-python3 -m pgadmin4' > /entrypoint.sh && chmod +x /entrypoint.sh
-
+# Copiar configuración mínima
 COPY config_local.py /pgadmin4/config_local.py
 
-CMD ["/entrypoint.sh"]
+# (Opcional) Copiar servers.json para precargar conexiones
+COPY servers.json /var/lib/pgadmin/storage/servers.json
+
+# Exponer el puerto
+EXPOSE 10000
+
+# Usar el ejecutable directamente
+CMD ["pgadmin4"]
+
