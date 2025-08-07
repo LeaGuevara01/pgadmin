@@ -58,4 +58,4 @@ COPY servers.json /var/lib/pgadmin/storage/servers.json
 EXPOSE 10000
 
 # Usar el ejecutable directamente
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "pgadmin4.pgAdmin4:app"]
+CMD ["gunicorn", "--preload", "--bind", "0.0.0.0:10000", "pgadmin4.pgAdmin4:app"]
