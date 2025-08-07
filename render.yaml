@@ -2,10 +2,14 @@ services:
   - type: web
     name: pgadmin
     env: docker
-    plan: free
+    plan: starter
     dockerfilePath: Dockerfile
     envVars:
       - key: PGADMIN_DEFAULT_EMAIL
-        value: admin@admin.com
+        fromEnvVar: PGADMIN_EMAIL
       - key: PGADMIN_DEFAULT_PASSWORD
-        value: admin
+        fromEnvVar: PGADMIN_PASSWORD
+      - key: PGADMIN_LISTEN_PORT
+        value: 10000
+      - key: PORT
+        value: 10000
