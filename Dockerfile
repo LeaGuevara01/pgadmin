@@ -31,4 +31,5 @@ ENV PGADMIN_DEFAULT_PASSWORD=admin
 
 # Crear carpetas necesarias
 RUN mkdir -p /pgadmin4 /var/lib/pgadmin && \
-    chmod -R 700
+    chmod -R 700 /pgadmin4 /var/lib/pgadmin && \
+    chown -R 1000:1000 /pgadmin4 /var/lib/pgadmin
