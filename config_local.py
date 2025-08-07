@@ -1,8 +1,8 @@
 import os
 
-# Habilitar autenticación por email y contraseña
 DEFAULT_SERVER = '0.0.0.0'
-DEFAULT_SERVER_PORT = int(os.environ.get("PGADMIN_LISTEN_PORT", 10000))
+DEFAULT_SERVER_PORT = int(os.environ.get("PORT", 10000))
+
 SQLITE_PATH = os.environ.get("PGADMIN_DATA_DIR", "/var/lib/pgadmin")
 LOG_FILE = os.path.join(SQLITE_PATH, "pgadmin4.log")
 SESSION_DB_PATH = os.path.join(SQLITE_PATH, "sessions")
