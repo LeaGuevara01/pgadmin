@@ -32,6 +32,9 @@ RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 # Install pgAdmin
 RUN pip install pgadmin4==8.6
 
+# Install gunicorn
+RUN pip install gunicorn
+
 # Set required environment variables
 ENV PGADMIN_LISTEN_PORT=10000
 ENV PGADMIN_DEFAULT_EMAIL=admin@admin.com
@@ -55,5 +58,4 @@ COPY servers.json /var/lib/pgadmin/storage/servers.json
 EXPOSE 10000
 
 # Usar el ejecutable directamente
-CMD ["pgadmin4"]
-
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "pgadmin4.pgAdmin4:app"]
